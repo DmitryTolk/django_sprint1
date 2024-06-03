@@ -1,4 +1,4 @@
-# Импортируем функцию path() 
+# Импортируем функцию path()
 # и файл pages/views.py, в котором объявлена view-функция index().
 from . import views
 from django.urls import path

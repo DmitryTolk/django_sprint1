@@ -1,7 +1,6 @@
 # blog/views.py
 from django.shortcuts import render
 # Класс HttpResponse нужно импортировать в код из модуля django.http.
-from django.http import HttpResponse
 
 posts = [
     {
