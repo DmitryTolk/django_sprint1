@@ -1,6 +1,5 @@
-# blog/views.py
+from django.http import Http404
 from django.shortcuts import render
-# Класс HttpResponse нужно импортировать в код из модуля django.http.
 
 posts = [
     {
@@ -45,22 +44,22 @@ posts = [
     },
 ]
 
+posts_by_id = {post['id']: post for post in posts}
 
 def index(request):
-    # return HttpResponse('index')
     template_name = 'blog/index.html'
-    context = {
-        'posts': posts,
-    }
+    context = {'posts': posts_by_id.values()}
     return render(request, template_name, context)
 
 
 def post_detail(request, id):
     template_name = 'blog/detail.html'
-    context = {
-        'post': posts[id],
-    }
-    return render(request, template_name, context)
+    try:
+        post = posts_by_id[id]
+    except KeyError:
+        raise Http404('Post does not exist')
+
+    return render(request, template_name, {'post': post})
 
 
 def category_posts(request, category_slug):
