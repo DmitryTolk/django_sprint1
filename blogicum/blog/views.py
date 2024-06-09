@@ -44,8 +44,7 @@ posts = [
     },
 ]
 
-posts_by_id = {post['id']: post for post in posts}
-
+posts_by_id = {post['id']: post for post in reversed(posts)}
 
 def index(request):
     template_name = 'blog/index.html'
@@ -55,9 +54,9 @@ def index(request):
 
 def post_detail(request, id):
     template_name = 'blog/detail.html'
-    try:
+    if posts_by_id.get(id) is not None:
         post = posts_by_id[id]
-    except KeyError:
+    else:
         raise Http404('Post does not exist')
 
     return render(request, template_name, {'post': post})
